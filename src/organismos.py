@@ -1,6 +1,6 @@
 import csv
 import xml.etree.ElementTree as ET
-#Sfrom lxml import etree
+from lxml import etree
 
 
 def checker(file):
@@ -63,7 +63,7 @@ def itemadder(items, root):
             elemento.text = f"{v}"
         elif "rol" in k:
             if roles == False:
-                rol = ET.SubElement(organismo, "rol")
+                rol = ET.SubElement(organismo, "roles")
                 ET.SubElement(rol, f"{k}").text = f"{v}"
                 roles =  True
             else:
@@ -92,7 +92,7 @@ def personaclean(campo):
     '''
     campolimpio = campo.split("-")[-1]
     return str(campolimpio)
-'''
+
 def validate(xml_path= "C:/Users/bllanos/Desktop/project1/prueba1/a1.xml", xsd_path= "C:/Users/bllanos/Desktop/project1/prueba1/organismos.xsd"):
     xmlschema_doc = etree.parse(xsd_path)
     xmlschema = etree.XMLSchema(xmlschema_doc)
@@ -101,6 +101,6 @@ def validate(xml_path= "C:/Users/bllanos/Desktop/project1/prueba1/a1.xml", xsd_p
     result = xmlschema.validate(xml_doc)
     print(result)
     return result
-
+'''
     #"C:/Users/bllanos/Desktop/project1/prueba1/organismos.xsd"
     #"C:/Users/bllanos/Desktop/project1/prueba1/a1.xml"'''

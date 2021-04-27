@@ -1,15 +1,15 @@
 import csv
 import xml.etree.ElementTree as ET
-from lxml import etree
+#from lxml import etree
 
 
 def checker(file):
     '''
     obtiene la ruta del archivo para poder usarla para que el XML se cree en la ruta del archivo original.
     '''
-    path = file.split("\\")
-    endpath = "\\".join(path[:-1]) 
-    print (endpath)
+    path = file.replace("\\","/")
+    path = file.split("/")
+    endpath = "/".join(path[:-1]) 
     return endpath
 
 
@@ -26,6 +26,7 @@ def organismos(file, filename):
             #header = next(csv_reader,None)
             #print( header)
             for row in csv_reader:
+                print(row)
                 '''
                 itera fila a fila del csv, cada fila un diccionario(row) con los valores a introducir en los diferentes campos,
                 y separa los ficheres si estos tiene n mas de 300 filas
@@ -68,7 +69,7 @@ def itemadder(items, root):
                 roles =  True
             else:
                 ET.SubElement(rol, f"{k}").text = f"{v}"
-        elif "persona" in k:
+        elif "persona" in k or "Persona" in k:
             if persona == False:
                 personacontacto = ET.SubElement(organismo,"personaContacto")
                 ET.SubElement(personacontacto, f"{personaclean(k)}").text = f"{v}"
@@ -92,7 +93,7 @@ def personaclean(campo):
     '''
     campolimpio = campo.split("-")[-1]
     return str(campolimpio)
-
+'''
 def validate(xml_path= "C:/Users/bllanos/Desktop/project1/prueba1/a1.xml", xsd_path= "C:/Users/bllanos/Desktop/project1/prueba1/organismos.xsd"):
     xmlschema_doc = etree.parse(xsd_path)
     xmlschema = etree.XMLSchema(xmlschema_doc)
